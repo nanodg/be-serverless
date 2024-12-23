@@ -8,11 +8,25 @@
   ],
   "routes": [
     {
-      "src": "/api-docs/(.*\\.css)",
+      "src": "/api-docs/swagger-ui.css",
       "headers": {
         "Content-Type": "text/css"
       },
-      "continue": true
+      "dest": "/api-docs/swagger-ui.css"
+    },
+    {
+      "src": "/api-docs/swagger-ui-bundle.js",
+      "headers": {
+        "Content-Type": "application/javascript"
+      },
+      "dest": "/api-docs/swagger-ui-bundle.js"
+    },
+    {
+      "src": "/api-docs/swagger-ui-standalone-preset.js",
+      "headers": {
+        "Content-Type": "application/javascript"
+      },
+      "dest": "/api-docs/swagger-ui-standalone-preset.js"
     },
     {
       "src": "/(.*)",
