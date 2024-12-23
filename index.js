@@ -16,11 +16,14 @@ const foodCategoryRoutes = require('./routes/foodCategoryRoutes');
 const errorHandler = require('./middleware/errorHandler');
 const notFound = require('./middleware/notFound');
 
-// Import Swagger
-const swaggerUi = require('swagger-ui-express');
+// Import Redoc
+const redoc = require('redoc-express');
 
 // Initialize express
 const app = express();
+
+// Serve static files
+app.use(express.static('public'));
 
 // Setup database
 connectDB();
@@ -29,29 +32,27 @@ connectDB();
 setupApp(app);
 
 app.get('/', (req, res) => {
-  res.redirect('/api-docs');
+  res.redirect('/docs');
 });
 
-// Swagger Documentation
-app.get('/api-docs.json', (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
-  res.send(swaggerSpec);
-});
-
-app.use('/api-docs', swaggerUi.serve);
-app.get('/api-docs', swaggerUi.setup(swaggerSpec, {
-  explorer: true,
-  customCss: '.swagger-ui .topbar { display: none }',
-  customSiteTitle: "API Documentation",
-  swaggerOptions: {
-    persistAuthorization: true
-  },
-  customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css',
-  customJs: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.min.js'
+// Redoc Documentation
+app.get('/docs', redoc({
+  title: 'API Documentation',
+  specUrl: '/docs-json',
+  redocOptions: {
+    hideDownloadButton: true,
+    theme: {
+      colors: {
+        primary: {
+          main: '#2c3e50'
+        }
+      }
+    }
+  }
 }));
 
-// Serve swagger.json
-app.get('/api-docs/swagger.json', (req, res) => {
+// Serve OpenAPI spec
+app.get('/docs-json', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(swaggerSpec);
 });
@@ -70,13 +71,13 @@ app.use(errorHandler);
 
 // Start server if not in production
 if (process.env.NODE_ENV !== 'production') {
-  const port = process.env.PORT || 3001;
+  const port = process.env.PORT || 3002;
   app.listen(port, () => {
     console.log(`
 🚀 Server running in ${process.env.NODE_ENV || 'development'} mode
 📡 Listening on port ${port}
 🌐 Access via: http://localhost:${port}
-📚 API Documentation: http://localhost:${port}/api-docs
+📚 API Documentation: http://localhost:${port}/docs
     `);
   });
 }
