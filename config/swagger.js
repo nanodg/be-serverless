@@ -15,7 +15,7 @@ const options = {
     },
     servers: [
       {
-        url: `${process.env.BASE_URL || 'http://localhost:3002'}/api`,
+        url: `${process.env.BASE_URL || 'http://localhost:3001'}/api`,
         description: 'Development server',
       },
     ],
