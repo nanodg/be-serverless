@@ -8,25 +8,13 @@
   ],
   "routes": [
     {
-      "src": "/api-docs/swagger-ui.css",
+      "src": "/api-docs/(.*)",
       "headers": {
-        "Content-Type": "text/css"
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Accept"
       },
-      "dest": "/api-docs/swagger-ui.css"
-    },
-    {
-      "src": "/api-docs/swagger-ui-bundle.js",
-      "headers": {
-        "Content-Type": "application/javascript"
-      },
-      "dest": "/api-docs/swagger-ui-bundle.js"
-    },
-    {
-      "src": "/api-docs/swagger-ui-standalone-preset.js",
-      "headers": {
-        "Content-Type": "application/javascript"
-      },
-      "dest": "/api-docs/swagger-ui-standalone-preset.js"
+      "dest": "index.js"
     },
     {
       "src": "/(.*)",

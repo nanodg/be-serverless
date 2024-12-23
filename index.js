@@ -32,6 +32,9 @@ app.get('/', (req, res) => {
   res.redirect('/api-docs');
 });
 
+// Serve Swagger UI static files
+app.use('/api-docs', express.static(require('swagger-ui-express').getAbsoluteFSPath()));
+
 // Swagger Documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
   explorer: true,
